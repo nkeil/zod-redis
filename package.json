@@ -1,0 +1,35 @@
+{
+  "name": "zredis",
+  "version": "0.1.0",
+  "author": "Nicolas Keil <nkeil.dev@gmail.com>",
+  "description": "Typesafe Redis storage made easy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nkeil/zredis"
+  },
+  "keywords": [
+    "redis",
+    "zod",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "format": "prettier --write src/**/*.ts *.md --ignore-unknown --no-error-on-unmatched-pattern",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "ioredis": "^5.3.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "typescript": "4.9.4"
+  }
+}
