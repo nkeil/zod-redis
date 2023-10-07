@@ -1,5 +1,6 @@
 <div align="center">
-  <h1>zredis 🚧</h1>
+  <img src="logo.svg" width="200px" align="center" alt="zredis logo" />
+  <h1>zredis</h1>
   <h3>Typesafe Redis storage made easy.</h3>
 </div>
 
@@ -7,7 +8,9 @@
 
 If you're like me, you love the speed and simplicity of Redis, but miss the autocompletion and peace of mind that comes with static typing in TypeScript. With the power of [Zod](https://github.com/colinhacks/zod), zredis provides a lightweight wrapper around [ioredis](https://github.com/redis/ioredis) to help you skip the headache of keeping track of your data structure, stringifying/destringifying your payload, and remembering what you're storing under which key. Specify the schema once and get/set with peace of mind.
 
-This package is still under development! Contributions are welcome.
+## Under development 🚧 
+
+This package is still under development and APIs are subject to frequent changes. Production use is not yet intended.
 
 <!--
 ## Basic Usage
