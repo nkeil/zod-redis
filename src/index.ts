@@ -1,45 +1,57 @@
 import { Redis } from "ioredis";
-import { ZodTypeAny, z } from "zod";
 import superjson from "superjson";
+import {
+  Key,
+  ModelName,
+  Schema,
+  SchemaModel,
+  Value,
+  ZRedisOptions,
+} from "./types";
+export { type Schema } from "./types";
 
-type SchemaModel = {
-  zod: ZodTypeAny;
-  getKey: (...args: string[]) => string;
-  expirationSeconds?: number;
-};
-type Schema = Record<string, SchemaModel>;
+export class ZRedis<TSchema extends Schema = {}> {
+  private schema?: TSchema;
+  private redis: Redis;
 
-type ModelName<TSchema extends Schema> = keyof TSchema;
-type Key<
-  TSchema extends Schema,
-  TModel extends ModelName<TSchema>,
-> = ReturnType<TSchema[TModel]["getKey"]>;
-type Value<TSchema extends Schema, TModel extends ModelName<TSchema>> = z.infer<
-  TSchema[TModel]["zod"]
->;
-
-export class ZRedis<TSchema extends Schema> {
+  constructor(port: number, host: string, options: ZRedisOptions<TSchema>);
+  constructor(path: string, options: ZRedisOptions<TSchema>);
+  constructor(port: number, options: ZRedisOptions<TSchema>);
+  constructor(port: number, host: string);
+  constructor(options: ZRedisOptions<TSchema>);
+  constructor(port: number);
+  constructor(path: string);
+  constructor();
   constructor(
-    private redis: Redis,
-    private schema: TSchema
-  ) {}
+    arg1?: number | string | ZRedisOptions<TSchema>,
+    arg2?: string | ZRedisOptions<TSchema>,
+    arg3?: ZRedisOptions<TSchema>
+  ) {
+    for (const arg of [arg1, arg2, arg3]) {
+      if (typeof arg === "object") this.schema = arg.schema;
+    }
+    this.redis = new Redis(
+      // @ts-expect-error
+      ...[arg1, arg2, arg3].filter((arg) => arg !== undefined)
+    );
+  }
 
   model<TModel extends ModelName<TSchema>>(model: TModel) {
-    return new Model(this.redis, this.schema, model);
+    if (!this.schema?.[model]) {
+      throw new Error("Tried to access a nonexistent model!");
+    }
+    return new Model(this.redis, this.schema[model]);
   }
 }
 
-class Model<TSchema extends Schema, TModel extends ModelName<TSchema>> {
-  private model: SchemaModel;
-  public getKey: TSchema[TModel]["getKey"];
+class Model<TModel extends SchemaModel> {
+  public getKey: TModel["getKey"];
 
   constructor(
     private redis: Redis,
-    schema: TSchema,
-    model: TModel
+    private model: TModel
   ) {
-    this.model = schema[model];
-    this.getKey = this.model.getKey;
+    this.getKey = model.getKey;
   }
 
   /**
@@ -48,13 +60,19 @@ class Model<TSchema extends Schema, TModel extends ModelName<TSchema>> {
    * @param key A string targeting the specific model instance
    * @param value The value you will be storing under `key`
    */
-  async set(key: Key<TSchema, TModel>, value: Value<TSchema, TModel>) {
-    const expirationSeconds = this.model.expirationSeconds;
-    const result = await this.redis.set(key, superjson.stringify(value));
-    if (expirationSeconds !== undefined) {
-      await this.redis.expire(key, expirationSeconds);
+  async set(key: Key<TModel>, value: Value<TModel>) {
+    try {
+      const expirationSeconds = this.model.expirationSeconds;
+      const result = await this.redis.set(key, superjson.stringify(value));
+      if (expirationSeconds !== undefined) {
+        await this.redis.expire(key, expirationSeconds);
+      }
+      return result;
+    } catch (e) {
+      console.error("Error in model.set:");
+      console.error(e);
+      return;
     }
-    return result;
   }
 
   /**
@@ -62,14 +80,15 @@ class Model<TSchema extends Schema, TModel extends ModelName<TSchema>> {
    * @param model The name of the model you are querying for
    * @param key A string targeting the specific model instance
    */
-  async get(key: Key<TSchema, TModel>) {
+  async get(key: Key<TModel>) {
     try {
       const zodString = await this.redis.get(key);
       if (!zodString) return null;
       const zodResponse = this.model.zod.safeParse(superjson.parse(zodString));
       if (!zodResponse.success) return null;
-      return zodResponse.data as Value<TSchema, TModel>;
+      return zodResponse.data as Value<TModel>;
     } catch (e) {
+      console.error("Error in model.get:");
       console.error(e);
       return null;
     }
