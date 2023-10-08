@@ -1,14 +1,25 @@
-import Redis from "ioredis";
-import { ZRedis } from "../src/index";
+import { Schema, ZRedis } from "../src/index";
 import { z } from "zod";
 
-const zredis = new ZRedis(new Redis(), {
+const schema = {
   birthday: {
     zod: z.date(),
-    getKey: <T extends string>(userId: T) => `birthday:${userId}` as const,
+    getKey: <T extends string>(userId: T) => {
+      return `birthday:${userId}` as const;
+    },
     expirationSeconds: 30,
   },
-});
+} satisfies Schema;
+
+/**
+ * Test behavior of standard Redis functions for comparison
+ */
+// const redis = new Redis(6380);
+// await redis.set("birthday:12345", "test");
+// const result = await redis.get("birthday:12345");
+// console.log(result);
+
+const zredis = new ZRedis(6379, "127.0.0.1", { schema });
 
 const birthdayKey = zredis.model("birthday").getKey("12345");
 

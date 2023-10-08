@@ -14,14 +14,18 @@ This package is still under development and APIs are subject to frequent changes
 
 ## Basic Usage
 
-Create a Redis storage schema:
+Create a zod-redis instance using the same constructor as ioredis:
 
 ```typescript
-const zredis = new ZRedis(new Redis(), {
-  birthday: {
-    zod: z.date(),
-    getKey: <T extends string>(userId: T) => `birthday:${userId}` as const,
-    expirationSeconds: 30,
+const zredis = new ZRedis(6379, "127.0.0.1", {
+  schema: {
+    birthday: {
+      zod: z.date(),
+      getKey: <T extends string>(userId: T) => {
+        return `birthday:${userId}` as const;
+      },
+      expirationSeconds: 30,
+    },
   },
 });
 ```
