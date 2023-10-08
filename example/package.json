@@ -1,0 +1,16 @@
+{
+  "name": "example",
+  "scripts": {
+    "dev": "bun index.ts"
+  },
+  "dependencies": {
+    "ioredis": "^5.3.2",
+    "string-ts": "^1.2.0",
+    "zod": "^3.22.4",
+    "zredis": "link:zredis"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.4",
+    "typescript": "^5.2.2"
+  }
+}
