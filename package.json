@@ -1,11 +1,11 @@
 {
-  "name": "zredis",
+  "name": "zod-redis",
   "version": "0.0.1",
   "author": "Nicolas Keil <nkeil.dev@gmail.com>",
   "description": "Typesafe Redis storage made easy",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nkeil/zredis"
+    "url": "https://github.com/nkeil/zod-redis"
   },
   "keywords": [
     "redis",

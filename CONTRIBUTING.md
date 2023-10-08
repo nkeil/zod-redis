@@ -14,7 +14,7 @@ The following steps will get you setup to contribute changes to this repo:
 
 1. Fork this repo.
 
-2. Clone your forked repo: `git clone git@github.com:{your_username}/zredis.git`.
+2. Clone your forked repo: `git clone git@github.com:{your_username}/zod-redis.git`.
 
 3. Run `pnpm install` to install dependencies.
 
@@ -22,7 +22,7 @@ The following steps will get you setup to contribute changes to this repo:
 
 5. Implement your contributions, and push your branch to the repo: `git push origin your-feature-name`.
 
-6. Go to https://github.com/nkeil/zredis and select the branch you just pushed in the "compare:" dropdown.
+6. Go to https://github.com/nkeil/zod-redis and select the branch you just pushed in the "compare:" dropdown.
 
 7. Submit the PR. The maintainers will follow up ASAP.
 
@@ -32,5 +32,5 @@ TODO
 
 ## License
 
-By contributing your code to the zredis GitHub repository, you agree to
+By contributing your code to the zod-redis GitHub repository, you agree to
 license your contribution under the MIT license.
