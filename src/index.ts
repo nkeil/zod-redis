@@ -1,5 +1,5 @@
-import { Redis } from "ioredis";
-import superjson from "superjson";
+import { Redis } from 'ioredis';
+import superjson from 'superjson';
 import {
   Key,
   ModelName,
@@ -7,10 +7,11 @@ import {
   SchemaModel,
   Value,
   ZRedisOptions,
-} from "./types";
-export { type Schema } from "./types";
+} from './types';
 
-export class ZRedis<TSchema extends Schema = {}> {
+export { type Schema } from './types';
+
+export class ZRedis<TSchema extends Schema = Record<string, never>> {
   private schema?: TSchema;
   private redis: Redis;
 
@@ -25,31 +26,31 @@ export class ZRedis<TSchema extends Schema = {}> {
   constructor(
     arg1?: number | string | ZRedisOptions<TSchema>,
     arg2?: string | ZRedisOptions<TSchema>,
-    arg3?: ZRedisOptions<TSchema>
+    arg3?: ZRedisOptions<TSchema>,
   ) {
     for (const arg of [arg1, arg2, arg3]) {
-      if (typeof arg === "object") this.schema = arg.schema;
+      if (typeof arg === 'object') this.schema = arg.schema;
     }
     this.redis = new Redis(
-      // @ts-expect-error
-      ...[arg1, arg2, arg3].filter((arg) => arg !== undefined)
+      // @ts-expect-error Constructor args are the same as ioredis
+      ...[arg1, arg2, arg3].filter((arg) => arg !== undefined),
     );
   }
 
   model<TModel extends ModelName<TSchema>>(model: TModel) {
     if (!this.schema?.[model]) {
-      throw new Error("Tried to access a nonexistent model!");
+      throw new Error('Tried to access a nonexistent model!');
     }
     return new Model(this.redis, this.schema[model]);
   }
 }
 
 class Model<TModel extends SchemaModel> {
-  public getKey: TModel["getKey"];
+  public getKey: TModel['getKey'];
 
   constructor(
     private redis: Redis,
-    private model: TModel
+    private model: TModel,
   ) {
     this.getKey = model.getKey;
   }
@@ -69,7 +70,7 @@ class Model<TModel extends SchemaModel> {
       }
       return result;
     } catch (e) {
-      console.error("Error in model.set:");
+      console.error('Error in model.set:');
       console.error(e);
       return;
     }
@@ -88,7 +89,7 @@ class Model<TModel extends SchemaModel> {
       if (!zodResponse.success) return null;
       return zodResponse.data as Value<TModel>;
     } catch (e) {
-      console.error("Error in model.get:");
+      console.error('Error in model.get:');
       console.error(e);
       return null;
     }
