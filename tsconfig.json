@@ -15,5 +15,5 @@
     "declaration": true,
     "outDir": "./dist"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "prettier.config.mjs", ".eslintrc.js"]
 }
