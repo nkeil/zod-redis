@@ -27,9 +27,16 @@ const birthdayKey = zredis.model('birthday').getKey('12345');
 // await zredis.model("birthday").set("birthday;12345", new Date(2015, 0, 5));
 // await zredis.model("birthday").set(birthdayKey, '2023-10-08T00:36:30.104Z');
 
+// Safe storage and retrieval using zod commands
 await zredis.model('birthday').set(birthdayKey, new Date(2015, 0, 5));
+const result1 = await zredis.model('birthday').get(birthdayKey);
+console.log(result1?.toDateString());
 
-const result = await zredis.model('birthday').get(birthdayKey);
-console.log(result?.toDateString());
+// Unsafe storage and retrieval
+await zredis.set('birthday:12345', 'this is not a date');
+const result2 = await zredis.model('birthday').get(birthdayKey);
+console.log(result2); // should be null
+const result3 = await zredis.get(birthdayKey); // raw access returns the string
+console.log(result3);
 
 process.exit(0);

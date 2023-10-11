@@ -11,9 +11,10 @@ import {
 
 export { type Schema } from './types';
 
-export class ZRedis<TSchema extends Schema = Record<string, never>> {
+export class ZRedis<
+  TSchema extends Schema = Record<string, never>,
+> extends Redis {
   private schema?: TSchema;
-  private redis: Redis;
 
   constructor(port: number, host: string, options: ZRedisOptions<TSchema>);
   constructor(path: string, options: ZRedisOptions<TSchema>);
@@ -28,20 +29,18 @@ export class ZRedis<TSchema extends Schema = Record<string, never>> {
     arg2?: string | ZRedisOptions<TSchema>,
     arg3?: ZRedisOptions<TSchema>,
   ) {
+    // @ts-expect-error Constructor args are the same as ioredis
+    super(...[arg1, arg2, arg3].filter((arg) => arg !== undefined));
     for (const arg of [arg1, arg2, arg3]) {
       if (typeof arg === 'object') this.schema = arg.schema;
     }
-    this.redis = new Redis(
-      // @ts-expect-error Constructor args are the same as ioredis
-      ...[arg1, arg2, arg3].filter((arg) => arg !== undefined),
-    );
   }
 
   model<TModel extends ModelName<TSchema>>(model: TModel) {
     if (!this.schema?.[model]) {
       throw new Error('Tried to access a nonexistent model!');
     }
-    return new Model(this.redis, this.schema[model]);
+    return new Model(this, this.schema[model]);
   }
 }
 

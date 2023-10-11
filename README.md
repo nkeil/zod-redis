@@ -6,15 +6,26 @@
 
 ## Introduction
 
-Do you love the speed and simplicity of Redis but miss the autocompletion and peace of mind that comes with static typing in TypeScript? Built on top of [Zod](https://github.com/colinhacks/zod), zod-redis provides a lightweight wrapper around [ioredis](https://github.com/redis/ioredis) to help you skip the headache of keeping track of your data structures, stringifying/destringifying your payload, and remembering what you're storing under which key. Specify the schema once and get/set with peace of mind.
+Do you love the speed and simplicity of Redis but miss the autocompletion and peace of mind that comes with static typing in TypeScript? Built on top of [Zod](https://github.com/colinhacks/zod), zod-redis is a drop-in replacement for [ioredis](https://github.com/redis/ioredis) that'll help you skip the headache of keeping track of your data structures, stringifying/destringifying your payload, and remembering what you're storing under which key. Specify the schema once and get/set with peace of mind.
 
 ## Under development 🚧
 
 This package is still under development and APIs are subject to frequent changes. Production use is not yet intended.
 
+## Installation
+
+Install zod-redis on npm using your favorite package manager:
+
+```bash
+npm install zod-redis
+yarn add zod-redis
+bun add zod-redis
+pnpm add zod-redis
+```
+
 ## Basic Usage
 
-Create a zod-redis instance using the same constructor as ioredis:
+Create a zod-redis instance using the same constructor as ioredis by specifying an additional `schema` option:
 
 ```typescript
 const zredis = new ZRedis(6379, '127.0.0.1', {
@@ -59,11 +70,21 @@ const result = await zredis.model('birthday').get(birthdayKey);
 console.log(result?.toDateString());
 ```
 
-<!--
-## Installation
+And skip the type theatrics whenever it suits you:
 
-TODO: publish to NPM
--->
+```typescript
+await zredis.set('birthday:12345', 'this is not a date');
+
+// Protected accessor returns null
+const result2 = await zredis.model('birthday').get(birthdayKey);
+
+// Returns 'this is not a date'
+const result3 = await zredis.get(birthdayKey);
+```
+
+## How it works
+
+Zod-redis is actually a wrapper around the `ioredis` package and tested against the entire `ioredis` test suite. The `ZRedis` class extends `Redis` with an additional constructor option for passing in the schema and a `model` function which provides access to commands that operate on your schema models.
 
 <!--
 ## Documentation
