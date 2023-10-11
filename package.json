@@ -1,6 +1,6 @@
 {
   "name": "zod-redis",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Nicolas Keil <nkeil.dev@gmail.com>",
   "description": "Typesafe Redis storage made easy",
   "repository": {
