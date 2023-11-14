@@ -88,8 +88,8 @@ class Model<TModel extends SchemaModel> {
       if (!zodResponse.success) return null;
       return zodResponse.data as Value<TModel>;
     } catch (e) {
-      console.error('Error in model.get:');
-      console.error(e);
+      // console.error('Error in model.get:');
+      // console.error(e);
       return null;
     }
   }
