@@ -27,7 +27,8 @@
     "build": "rimraf dist && tsc",
     "format": "prettier --write ./**/*.ts *.md --ignore-unknown --no-error-on-unmatched-pattern",
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --ignore-path .gitignore"
+    "lint": "eslint . --ignore-path .gitignore",
+    "test": "bun test"
   },
   "peerDependencies": {
     "zod": "^3.22.4"

@@ -1,0 +1,9 @@
+{
+  "name": "tests",
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.4"
+  }
+}

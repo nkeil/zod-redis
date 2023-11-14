@@ -12,7 +12,11 @@ const config = {
     ecmaVersion: 2018,
     sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: ['./example/tsconfig.json', './tsconfig.json'],
+    project: [
+      './tsconfig.json',
+      './example/tsconfig.json',
+      './tests/tsconfig.json',
+    ],
   },
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'error',
