@@ -20,9 +20,11 @@ const config = {
     '@typescript-eslint/consistent-indexed-object-style': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
 
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
 
     'no-only-tests/no-only-tests': 'error',
     'unicorn/filename-case': 'error',
@@ -32,18 +34,6 @@ const config = {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',
-      },
-    ],
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'typeParameter',
-        format: ['PascalCase'],
-        leadingUnderscore: 'allow',
-        custom: {
-          regex: '^(T|\\$)[A-Z][a-zA-Z]+[0-9]*$',
-          match: true,
-        },
       },
     ],
     'max-params': ['error', 3],
