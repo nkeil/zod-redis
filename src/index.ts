@@ -1,6 +1,7 @@
 import { Redis } from 'ioredis';
 import superjson from 'superjson';
 import {
+  GetSchema,
   Key,
   ModelName,
   Schema,
@@ -12,27 +13,30 @@ import {
 export { type Schema } from './types';
 
 export class ZRedis<
-  TSchema extends Schema = Record<string, never>,
+  TOptions extends ZRedisOptions,
+  TSchema extends Schema = GetSchema<TOptions>,
 > extends Redis {
   private schema?: TSchema;
 
-  constructor(port: number, host: string, options: ZRedisOptions<TSchema>);
-  constructor(path: string, options: ZRedisOptions<TSchema>);
-  constructor(port: number, options: ZRedisOptions<TSchema>);
+  constructor(port: number, host: string, options: TOptions);
+  constructor(path: string, options: TOptions);
+  constructor(port: number, options: TOptions);
   constructor(port: number, host: string);
-  constructor(options: ZRedisOptions<TSchema>);
+  constructor(options: TOptions);
   constructor(port: number);
   constructor(path: string);
   constructor();
   constructor(
-    arg1?: number | string | ZRedisOptions<TSchema>,
-    arg2?: string | ZRedisOptions<TSchema>,
-    arg3?: ZRedisOptions<TSchema>,
+    arg1?: number | string | TOptions,
+    arg2?: string | TOptions,
+    arg3?: TOptions,
   ) {
     // @ts-expect-error Constructor args are the same as ioredis
     super(...[arg1, arg2, arg3].filter((arg) => arg !== undefined));
     for (const arg of [arg1, arg2, arg3]) {
-      if (typeof arg === 'object') this.schema = arg.schema;
+      if (typeof arg === 'object') {
+        this.schema = arg.schema as TSchema | undefined;
+      }
     }
   }
 
