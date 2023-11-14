@@ -45,7 +45,7 @@ Construct keys using custom input:
 
 ```typescript
 const birthdayKey = zredis.model('birthday').getKey('12345');
-//     ^? const birthdayKey: "birthday: 12345"
+//     ^? const birthdayKey: "birthday:12345"
 ```
 
 Set values with full typesafe input verification:
@@ -76,15 +76,15 @@ And skip the type theatrics whenever it suits you:
 await zredis.set('birthday:12345', 'this is not a date');
 
 // Protected accessor returns null
-const result2 = await zredis.model('birthday').get(birthdayKey);
+const protectedResult = await zredis.model('birthday').get(birthdayKey);
 
 // Returns 'this is not a date'
-const result3 = await zredis.get(birthdayKey);
+const rawResult = await zredis.get(birthdayKey);
 ```
 
 ## How it works
 
-Zod-redis is actually a wrapper around the `ioredis` package and tested against the entire `ioredis` test suite. The `ZRedis` class extends `Redis` with an additional constructor option for passing in the schema and a `model` function which provides access to commands that operate on your schema models.
+Zod-redis is a wrapper around the `ioredis` package and tested against the entire `ioredis` test suite. The `ZRedis` class extends `Redis` with an additional constructor option for passing in the schema and a `model` function which provides access to commands that operate on your schema models.
 
 <!--
 ## Documentation
