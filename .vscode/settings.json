@@ -10,5 +10,13 @@
   "eslint.workingDirectories": [{ "pattern": "." }, { "pattern": "example/" }],
 
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#3068b7",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#19365e",
+    "titleBar.inactiveForeground": "#274d82"
+  },
+  "editor.stickyScroll.enabled": true
 }
