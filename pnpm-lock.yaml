@@ -4,54 +4,85 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  ioredis:
-    specifier: ^5.3.2
-    version: 5.3.2
-  superjson:
-    specifier: ^1.13.3
-    version: 1.13.3
-  zod:
-    specifier: ^3.22.4
-    version: 3.22.4
+importers:
 
-devDependencies:
-  '@ianvs/prettier-plugin-sort-imports':
-    specifier: ^4.1.0
-    version: 4.1.0(prettier@3.0.3)
-  '@types/eslint':
-    specifier: ^8.44.3
-    version: 8.44.3
-  '@types/node':
-    specifier: ^20.8.3
-    version: 20.8.3
-  '@typescript-eslint/eslint-plugin':
-    specifier: ^6.7.4
-    version: 6.7.4(@typescript-eslint/parser@6.7.4)(eslint@8.51.0)(typescript@5.2.2)
-  '@typescript-eslint/parser':
-    specifier: ^6.7.4
-    version: 6.7.4(eslint@8.51.0)(typescript@5.2.2)
-  eslint:
-    specifier: ^8.51.0
-    version: 8.51.0
-  eslint-config-prettier:
-    specifier: ^9.0.0
-    version: 9.0.0(eslint@8.51.0)
-  eslint-plugin-no-only-tests:
-    specifier: ^3.1.0
-    version: 3.1.0
-  eslint-plugin-unicorn:
-    specifier: ^48.0.1
-    version: 48.0.1(eslint@8.51.0)
-  prettier:
-    specifier: ^3.0.3
-    version: 3.0.3
-  rimraf:
-    specifier: ^5.0.5
-    version: 5.0.5
-  typescript:
-    specifier: ^5.2.2
-    version: 5.2.2
+  .:
+    dependencies:
+      ioredis:
+        specifier: ^5.3.2
+        version: 5.3.2
+      superjson:
+        specifier: ^1.13.3
+        version: 1.13.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ^4.1.0
+        version: 4.1.0(prettier@3.0.3)
+      '@types/eslint':
+        specifier: ^8.44.3
+        version: 8.44.3
+      '@types/node':
+        specifier: ^20.8.3
+        version: 20.8.3
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.7.4
+        version: 6.7.4(@typescript-eslint/parser@6.7.4)(eslint@8.51.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.7.4
+        version: 6.7.4(eslint@8.51.0)(typescript@5.2.2)
+      eslint:
+        specifier: ^8.51.0
+        version: 8.51.0
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.0.0(eslint@8.51.0)
+      eslint-plugin-no-only-tests:
+        specifier: ^3.1.0
+        version: 3.1.0
+      eslint-plugin-unicorn:
+        specifier: ^48.0.1
+        version: 48.0.1(eslint@8.51.0)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.5
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  example:
+    dependencies:
+      ioredis:
+        specifier: ^5.3.2
+        version: 5.3.2
+      string-ts:
+        specifier: ^1.2.0
+        version: 1.3.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      bun-types:
+        specifier: ^1.0.4
+        version: 1.0.11
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  tests:
+    dependencies:
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      bun-types:
+        specifier: ^1.0.4
+        version: 1.0.11
 
 packages:
 
@@ -667,6 +698,10 @@ packages:
   /builtin-modules@3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
+    dev: true
+
+  /bun-types@1.0.11:
+    resolution: {integrity: sha512-XaDwjnBlkdTOtBEAcXhDnPSKFMlwFK/526z0iyairYIDhZJMzZM1QU4D7XRiEI2SpKQWexn0S/LN9Mwx5xSJNg==}
     dev: true
 
   /callsites@3.1.0:
@@ -1697,6 +1732,10 @@ packages:
 
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
+    dev: false
+
+  /string-ts@1.3.3:
+    resolution: {integrity: sha512-0nU2RyF4+PMTA7K6TlL/Vzn2S+JGTI1OGonlgk/cfbVZ0zlzqg4dhXU74KunZKWf3KO5KPJhOalM1WHy2zag8Q==}
     dev: false
 
   /string-width@4.2.3:
