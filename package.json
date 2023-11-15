@@ -28,7 +28,7 @@
     "format": "prettier --write ./**/*.ts *.md --ignore-unknown --no-error-on-unmatched-pattern",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ignore-path .gitignore",
-    "test": "bun test"
+    "test": "pnpm -F tests run test"
   },
   "peerDependencies": {
     "zod": "^3.22.4"

@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test';
+import { expect, test } from 'vitest';
 import { z } from 'zod';
 import { ZRedis } from '../../src/index';
 import { assertEqual, assertIs } from './utils';

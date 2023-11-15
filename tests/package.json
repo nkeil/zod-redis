@@ -1,9 +1,12 @@
 {
   "name": "tests",
-  "dependencies": {
-    "zod": "^3.22.4"
+  "scripts": {
+    "test": "vitest"
   },
-  "devDependencies": {
-    "bun-types": "^1.0.4"
+  "dependencies": {
+    "@types/sinon": "^17.0.1",
+    "sinon": "^17.0.1",
+    "vitest": "^0.34.6",
+    "zod": "^3.22.4"
   }
 }
