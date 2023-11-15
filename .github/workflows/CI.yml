@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.7.0
+        with:
+          redis-version: latest
+
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -44,8 +49,14 @@ jobs:
       - name: Install deps (with cache)
         run: pnpm install --child-concurrency 3
 
+      - name: Type Check
+        run: pnpm type-check
+
       - name: Run ESLint
         run: pnpm lint
+
+      - name: Run tests
+        run: pnpm test
 
       - name: Build
         run: pnpm build
