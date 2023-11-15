@@ -36,6 +36,17 @@ export class ZRedis<
     for (const arg of [arg1, arg2, arg3]) {
       if (typeof arg === 'object') {
         this.schema = arg.schema as TSchema | undefined;
+
+        // Verify mandatory expiration option
+        if (arg.schema && arg.mandatoryExpiration) {
+          for (const [name, model] of Object.entries(arg.schema)) {
+            if (model.expirationSeconds === undefined) {
+              throw new Error(
+                `Mandatory expiration was turned on, and a missing expiration was found on model ${name}!`,
+              );
+            }
+          }
+        }
       }
     }
   }
