@@ -29,5 +29,7 @@ export type ZRedisOptions = RedisOptions & { schema?: Schema } & (
 export type GetSchema<TOptions extends ZRedisOptions> = TOptions extends {
   schema: infer TSchema;
 }
-  ? TSchema
+  ? TSchema extends Schema
+    ? TSchema
+    : Record<string, never>
   : Record<string, never>;
