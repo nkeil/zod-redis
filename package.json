@@ -1,6 +1,6 @@
 {
   "name": "zod-redis",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Nicolas Keil <nkeil.dev@gmail.com>",
   "description": "Typesafe Redis storage made easy",
   "repository": {
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "^18.0.0",
+    "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@8.12.0",
