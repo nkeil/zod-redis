@@ -31,7 +31,7 @@
     "test": "pnpm -F tests run test"
   },
   "peerDependencies": {
-    "zod": "^3.22.4"
+    "zod": "^3.22.4 || ^4.0.0"
   },
   "dependencies": {
     "ioredis": "^5.3.2",
